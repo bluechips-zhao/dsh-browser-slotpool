@@ -1,0 +1,9 @@
+# 维护者本地构建/依赖 junction（若有），不进入 Git；
+# 用户通过 GitHub 安装的是纯 .mjs 启动器 + patch 层，无需构建。
+node_modules/
+harness/
+
+# 本地测试噪声
+*.log
+.DS_Store
+Thumbs.db

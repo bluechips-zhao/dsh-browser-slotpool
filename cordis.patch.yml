@@ -1,0 +1,26 @@
+# dsh-browser-slotpool bundle patch: adds one `mcp-client` instance that
+# connects to a slot-pool-managed Playwright MCP browser.
+#
+# `command`/`args` are evaluated at load time via `!!js` (valid only under
+# plugin `config`). The `!!js` evaluator runs inside a `new Function` scope,
+# so it has `process` (and `process.env`) but NOT `import.meta`/module-scope.
+# The launcher path therefore comes from the `DSH_BROWSER_LAUNCHER` env var —
+# set it to the absolute path of `bin/browser-slotpool.mjs` (see README).
+#
+# The launcher owns the slot pool (CDP ports), atomic lock, stale-lock
+# self-heal, and slot isolation. Each mcp-client session picks a free slot.
+# Tool names surface as mcp__browser__<rawName>.
+- insert:
+    - id: browser-slotpool
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: browser
+        transport: stdio
+        command: !!js process.execPath
+        args:
+          - !!js process.env.DSH_BROWSER_LAUNCHER
+        cwd: !!js process.cwd()
+        toolCallTimeoutMs: 180000
+        failOnStartupError: false
+        env:
+          DSH_BROWSER_PORTS: '9222,9223'

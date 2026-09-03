@@ -1,0 +1,52 @@
+{
+  "name": "@deepseek-ai/dsh-browser-slotpool",
+  "description": "DSH bundle: a slot-pool wrapper around Playwright MCP for concurrent browser sessions. Adds an mcp-client instance that connects to a pool-managed Playwright browser (slot pool + atomic lock + stale-lock self-heal + slot isolation).",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "github:bluechips-zhao/dsh-browser-slotpool"
+  },
+  "keywords": [
+    "deepseek",
+    "harness",
+    "dsh",
+    "plugin",
+    "browser",
+    "mcp",
+    "mcp-client",
+    "playwright",
+    "slotpool",
+    "concurrency"
+  ],
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "dsh-browser-slotpool": "./bin/browser-slotpool.mjs"
+  },
+  "exports": {
+    "./bin/browser-slotpool.mjs": "./bin/browser-slotpool.mjs",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "bin/browser-slotpool.mjs",
+    "cordis.patch.yml",
+    "README.md",
+    "README.en.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-mcp-client": "^0.1.1-rc.2"
+  },
+  "engines": {
+    "node": "^22.19 || >=24"
+  }
+}
