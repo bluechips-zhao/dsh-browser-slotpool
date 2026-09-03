@@ -1,6 +1,6 @@
 {
   "name": "@deepseek-ai/dsh-browser-slotpool",
-  "description": "DSH bundle: a slot-pool wrapper around Playwright MCP for concurrent browser sessions. Adds an mcp-client instance that connects to a pool-managed Playwright browser (slot pool + atomic lock + stale-lock self-heal + slot isolation).",
+  "description": "DSH bundle: slot-pool wrapper for concurrent browser sessions｜并发浏览器会话槽位池插件",
   "version": "0.1.0",
   "repository": {
     "type": "git",

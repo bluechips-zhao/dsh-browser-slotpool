@@ -2,6 +2,8 @@
 
 # dsh-browser-slotpool — 并发浏览器槽位池插件
 
+> DSH bundle: slot-pool wrapper for concurrent browser sessions（并发浏览器会话槽位池包装）
+
 给 DeepSeek Harness 的 `mcp-client` 一个 **并发、幂等、互不破坏、崩了能自愈** 的浏览器 MCP。它只是一个 **patch 层 bundle**：往 profile 里加一条 `@deepseek-ai/dsh-mcp-client` 实例，`command`/`args` 指向本包自带的 `bin/browser-slotpool.mjs`（由该启动器管理槽位池）。浏览器工具以 `mcp__browser__<rawName>` 出现在模型面前。
 
 端到端本地验证（本地服务器 + 池化 Chrome 真实渲染，非 mock）：

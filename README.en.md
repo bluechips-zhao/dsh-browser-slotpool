@@ -2,6 +2,8 @@
 
 # dsh-browser-slotpool — Concurrent Browser Slot Pool Plugin
 
+> DSH bundle: 并发浏览器会话槽位池包装（slot-pool wrapper for concurrent browser sessions）
+
 Gives DSH's `mcp-client` a **concurrent, idempotent, non-destructive, self-healing** browser MCP. It is just a **patch-layer bundle**: it adds one `@deepseek-ai/dsh-mcp-client` instance to the profile whose `command`/`args` point at this package's own `bin/browser-slotpool.mjs` (the launcher that manages the slot pool). Browser tools surface as `mcp__browser__<rawName>`.
 
 End-to-end local verification (local server + pooled Chrome real render, not a mock):
