@@ -73,7 +73,7 @@ Other optional env vars (forwarded to the launcher via `mcp-client`'s `env`):
 |---|---|---|
 | `DSH_BROWSER_PORTS` | `9222,9223` | Slot (CDP port) list, comma-separated |
 | `DSH_BROWSER_BASE_DIR` | `mcp-shared-browsers` under LOCALAPPDATA / tmpdir | Shared browser data / lock root dir |
-| `DSH_PLAYWRIGHT_MCP_ENTRY` | (empty → falls back to npx) | Absolute path to `@playwright/mcp`'s `cli.js`; if set, runs node directly, **no npx/network needed** |
+| `DSH_PLAYWRIGHT_MCP_ENTRY` | (empty → falls back to npx) | Absolute path to `@playwright/mcp`'s `cli.js`; if set, runs node directly, **no npx/network needed**; verify that CLI's version yourself |
 | `DSH_PLAYWRIGHT_MCP_CMD` | `npx` | The command used to invoke `@playwright/mcp` (only when entry is unset) |
 | `CHROME_PATH` | common install paths probed | Browser executable |
 
@@ -86,7 +86,7 @@ This plugin is public under GitHub's [`dsh-plugin`](https://github.com/topics/ds
 ## Dependencies / Runtime requirements
 
 - **DSH provides** `@deepseek-ai/dsh-mcp-client` (this bundle only adds one line, no extra package).
-- **`@playwright/mcp`**: the launcher calls it via `npx @playwright/mcp@latest` (first run, online).
+- **`@playwright/mcp`**: the launcher pins `npx @playwright/mcp@0.0.82` (npm version checked 2026-09-27; first run needs network). A custom `DSH_PLAYWRIGHT_MCP_ENTRY` overrides this pin.
 - **Chrome/Chromium**: must be at `CHROME_PATH` or a common install path; otherwise the launcher reports "Chrome not found".
 
 ## Slot semantics cheat-sheet

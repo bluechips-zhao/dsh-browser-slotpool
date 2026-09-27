@@ -73,7 +73,7 @@ $env:DSH_BROWSER_LAUNCHER = "<DSH_HOME>/profiles/<name>/node_modules/@deepseek-a
 |---|---|---|
 | `DSH_BROWSER_PORTS` | `9222,9223` | 槽位（CDP 端口）列表，逗号分隔 |
 | `DSH_BROWSER_BASE_DIR` | LOCALAPPDATA / tmpdir 下 `mcp-shared-browsers` | 共享浏览器数据/锁根目录 |
-| `DSH_PLAYWRIGHT_MCP_ENTRY` | （空→回落 npx） | `@playwright/mcp` 的 `cli.js` 绝对路径；设了则用 node 直连，**免 npx/联网** |
+| `DSH_PLAYWRIGHT_MCP_ENTRY` | （空→回落 npx） | `@playwright/mcp` 的 `cli.js` 绝对路径；设了则用 node 直连，**免 npx/联网**；该路径的版本由使用者负责核对 |
 | `DSH_PLAYWRIGHT_MCP_CMD` | `npx` | 调 `@playwright/mcp` 的命令（仅 entry 未设时用） |
 | `CHROME_PATH` | 常见安装路径探测 | 浏览器可执行文件 |
 
@@ -91,7 +91,7 @@ $env:DSH_BROWSER_LAUNCHER = "<DSH_HOME>/profiles/<name>/node_modules/@deepseek-a
 ## 依赖 / 运行前提
 
 - **DSH 自带** `@deepseek-ai/dsh-mcp-client`（本 bundle 只加一行，不引包）。
-- **`@playwright/mcp`**：启动器用 `npx @playwright/mcp@latest` 调它（首次联网安装）。
+- **`@playwright/mcp`**：启动器固定调用 `npx @playwright/mcp@0.0.82`（2026-09-27 核对 npm 版本；首次需联网）。自定义 `DSH_PLAYWRIGHT_MCP_ENTRY` 可覆盖此版本。
 - **Chrome/Chromium**：需在 `CHROME_PATH` 或常见安装路径；否则启动器报"Chrome not found"。
 
 ## 槽位语义速查

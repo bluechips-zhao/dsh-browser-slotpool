@@ -223,22 +223,14 @@ function pickSlot() {
 
 // ---------------------------------- 启动 MCP ----------------------------------
 
-/** 优先复用已缓存的 @playwright/mcp 原始 CLI，避免二次包裹。 */
-function originalCliPath() {
-  const cache = path.join(
-    process.env.LOCALAPPDATA || os.tmpdir(),
-    "npm-cache", "_npx",
-    "9833c18b2d85bc59", "node_modules", "@playwright", "mcp", "cli.original.js"
-  );
-  return cache;
-}
+/** 已核对的 Playwright MCP 版本；避免 npx latest 悄然改变接口。 */
+const PLAYWRIGHT_MCP_PACKAGE = "@playwright/mcp@0.0.82";
 
 function runMcp(port) {
   const endpoint = `http://127.0.0.1:${port}`;
   log(`Launching Playwright MCP -> ${endpoint}`);
   log(`Slots: ${PORTS.join(", ")} | this session: ${port}`);
 
-  const originalCli = originalCliPath();
   const baseArgs = [`--cdp-endpoint=${endpoint}`, ...EXTRA_MCP_ARGS];
   let child;
 
@@ -247,17 +239,15 @@ function runMcp(port) {
   if (entry && fs.existsSync(entry)) {
     child = spawn(process.execPath, [entry, ...baseArgs], { stdio: "inherit", env: process.env });
     log(`Using DSH_PLAYWRIGHT_MCP_ENTRY -> ${entry}`);
-  } else if (fs.existsSync(originalCli)) {
-    child = spawn(process.execPath, [originalCli, ...baseArgs], { stdio: "inherit", env: process.env });
   } else if (process.platform === "win32") {
     // Windows 下 npx 是命令，需经 cmd；stdio 继承交给 @playwright/mcp
-    child = spawn("cmd.exe", ["/d", "/s", "/c", MCP_CMD, "-y", "@playwright/mcp@latest", ...baseArgs], {
+    child = spawn("cmd.exe", ["/d", "/s", "/c", MCP_CMD, "-y", PLAYWRIGHT_MCP_PACKAGE, ...baseArgs], {
       stdio: "inherit",
       windowsHide: true,
       env: process.env,
     });
   } else {
-    child = spawn(MCP_CMD, ["-y", "@playwright/mcp@latest", ...baseArgs], {
+    child = spawn(MCP_CMD, ["-y", PLAYWRIGHT_MCP_PACKAGE, ...baseArgs], {
       stdio: "inherit",
       env: process.env,
     });
